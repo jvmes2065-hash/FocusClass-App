@@ -22,36 +22,6 @@ jobs:
       - name: Build debug APK
         working-directory: FocusClass
         run: gradle assembleDebug --no-daemon
-      - name: Publish APK as a release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: build-${{ github.run_number }}
-          name: FocusClass build ${{ github.run_number }}
-          files: FocusClass/app/build/outputs/apk/debug/app-debug.apk
-name: Build APK
-on:
-  workflow_dispatch:
-  push:
-    branches: [main]
-permissions:
-  contents: write
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Unzip project
-        run: unzip -q FocusClass-Android.zip
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
-      - uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.9'
-      - name: Build debug APK
-        working-directory: FocusClass
-        run: gradle assembleDebug --no-daemon
       - name: Name the APK
         run: cp FocusClass/app/build/outputs/apk/debug/app-debug.apk FocusClass/FocusClass.apk
       - name: Publish APK as a release
@@ -60,3 +30,4 @@ jobs:
           tag_name: build-${{ github.run_number }}
           name: FocusClass build ${{ github.run_number }}
           files: FocusClass/FocusClass.apk
+        
